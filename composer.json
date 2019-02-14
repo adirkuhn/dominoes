@@ -1,0 +1,16 @@
+{
+    "name": "adirkuhn/dominoes",
+    "description": "Dominoes",
+    "type": "project",
+    "require-dev": {
+        "phpunit/phpunit": "^8.0",
+        "phpstan/phpstan": "^0.11"
+    },
+    "authors": [
+        {
+            "name": "Adir Kuhn",
+            "email": "adirkuhn@gmail.com"
+        }
+    ],
+    "require": {}
+}

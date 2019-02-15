@@ -31,10 +31,32 @@ class PlayerTest extends TestCase
         ];
     }
 
-    public function testPlayerAddDominoPiece()
+    /**
+     * @param string $playerName
+     * @param array $dominoStack
+     *
+     * @dataProvider dataProviderPlayerAndDominoes()
+     */
+    public function testPlayerAddDominoPiece(string $playerName, array $dominoStack)
     {
-        $player = new Player('Anon');
+        $player = new Player($playerName);
+        foreach ($dominoStack as $domino) {
+            $player->addDominoPiece($domino);
+        }
 
-        $this->assertEquals(0, $player->countDominoesPieces());
+        $this->assertEquals(count($dominoStack), $player->countDominoesPieces());
+    }
+
+    /**
+     * @return array
+     * @throws \AK\Dominoes\Exceptions\DominoInvalidRangeException
+     */
+    public function dataProviderPlayerAndDominoes(): array
+    {
+        return [
+            ['John', []],
+            ['Marcy', [new Domino(0, 0), new Domino(1, 2)]],
+            ['Joseph', [new Domino(4, 4), new Domino(1, 1), new Domino(5, 5)]]
+        ];
     }
 }

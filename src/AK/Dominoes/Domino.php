@@ -26,14 +26,19 @@ class Domino
     const SIDE_RIGHT = 'right';
 
     /**
-     * @var int $left
+     * Left value key
      */
-    private $left;
+    const LEFT_VALUE = 0;
 
     /**
-     * @var int $right
+     * Right value key
      */
-    private $right;
+    const RIGHT_VALUE = 1;
+
+    /**
+     * @var array $values
+     */
+    private $values;
 
     /**
      * Domino constructor.
@@ -45,24 +50,24 @@ class Domino
      */
     public function __construct(int $left, int $right)
     {
-        $this->setLeft($left);
-        $this->setRight($right);
+        $this->setLeftValue($left);
+        $this->setRightValue($right);
     }
 
     /**
      * @return int
      */
-    public function getLeft(): int
+    public function getLeftValue(): int
     {
-        return $this->left;
+        return $this->values[self::LEFT_VALUE];
     }
 
     /**
      * @return int
      */
-    public function getRight(): int
+    public function getRightValue(): int
     {
-        return $this->right;
+        return $this->values[self::RIGHT_VALUE];
     }
 
     /**
@@ -70,26 +75,26 @@ class Domino
      *
      * @throws DominoInvalidRangeException
      */
-    private function setLeft(int $left): void
+    private function setLeftValue(int $left): void
     {
         if (!$this->isAcceptableValue($left)) {
             throw new DominoInvalidRangeException(self::SIDE_LEFT);
         }
 
-        $this->left = $left;
+        $this->values[self::LEFT_VALUE] = $left;
     }
 
     /**
      * @param int $right
      * @throws DominoInvalidRangeException
      */
-    private function setRight(int $right): void
+    private function setRightValue(int $right): void
     {
         if (!$this->isAcceptableValue($right)) {
             throw new DominoInvalidRangeException(self::SIDE_RIGHT);
         }
 
-        $this->right = $right;
+        $this->values[self::RIGHT_VALUE] = $right;
     }
 
     /**
@@ -99,5 +104,24 @@ class Domino
     private function isAcceptableValue(int $sideValue): bool
     {
         return ($sideValue >= self::MIN_VALUE && $sideValue <= self::MAX_VALUE);
+    }
+
+    /**
+     * @return array
+     */
+    public function getValues(): array
+    {
+        return $this->values;
+    }
+
+    /**
+     * Inverse the values of the domino
+     *
+     * @return Domino Domino with reversed values
+     */
+    public function inversePiece(): Domino
+    {
+        $this->values = array_reverse($this->values, false);
+        return $this;
     }
 }

@@ -18,8 +18,15 @@ class DominoTest extends TestCase
     {
         $domino = new Domino($left, $right);
 
-        $this->assertEquals($left, $domino->getLeft());
-        $this->assertEquals($right, $domino->getRight());
+        //test original order
+        $this->assertEquals($left, $domino->getLeftValue());
+        $this->assertEquals($right, $domino->getRightValue());
+
+        $domino->inversePiece();
+
+        //test inverse order
+        $this->assertEquals($right, $domino->getLeftValue());
+        $this->assertEquals($left, $domino->getRightValue());
     }
 
     /**

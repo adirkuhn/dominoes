@@ -1,11 +1,11 @@
 unit-tests:
-	./vendor/bin/phpunit -c phpunit.xml --colors=auto
+	php ./vendor/bin/phpunit -c phpunit.xml --colors=auto
 
 analyser:
-	./vendor/bin/phpstan analyse src tests -l7
+	php ./vendor/bin/phpstan analyse src tests -l7
 
 psr2:
-	./vendor/bin/phpcs --standard=PSR2 --severity=1 src/ tests/
+	php ./vendor/bin/phpcs --standard=PSR2 --severity=1 src/ tests/
 
 tests: psr2 analyser unit-tests
 
@@ -17,3 +17,18 @@ install-composer:
 
 composer:
 	php ./composer.phar install
+
+test-in-docker:
+	docker-compose run -T app make install-composer composer tests
+
+play-cli:
+	php ./play-cli.php
+
+play-web:
+	php -S localhost:8080 -t .
+
+play-cli-in-docker:
+	docker-compose run -T app make install-composer composer && clear && make play-cli
+
+play-web-in-docker:
+	docker-compose run -p8080:8080 app make install-composer composer && php -S 0.0.0.0:8080 -t .

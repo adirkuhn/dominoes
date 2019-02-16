@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AK - Dominoes</title>
+</head>
+<body>
+<ul id="actions">
+    {% for action in gameActions %}
+        <li>{{ action }}</li>
+    {% endfor %}
+</ul>
+</body>
+<script type="application/javascript">
+    let list = document.getElementsByTagName('li');
+
+    for (let item of list) {
+        item.innerHTML = item.textContent.replace(
+            /([^\w\s':,!.]+)/g,
+            '<span style="font-size: 44px">$1</span>'
+        );
+    }
+</script>
+</html>

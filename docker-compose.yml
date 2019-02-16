@@ -1,0 +1,12 @@
+version: "3.1"
+services:
+    app:
+      build:
+        dockerfile: Dockerfile
+        context: .
+      container_name: ak-dominoes
+      working_dir: /application
+      volumes:
+          - .:/application
+      ports:
+       - "8080:8080"

@@ -46,15 +46,18 @@ class BoardTest extends TestCase
         return [
             [
                 [$dominoes['0-0']],
-                [$dominoes['0-0']]
+                [$dominoes['0-0']],
+                '🀱'
             ],
             [
                 [$dominoes['0-0'], $dominoes['0-2'], $dominoes['2-3']],
                 [$dominoes['2-3'], $dominoes['0-2'], $dominoes['0-0']],
+                '🁈🀿🀱'
             ],
             [
                 [$dominoes['6-6'], $dominoes['5-5'], $dominoes['4-4'], $dominoes['0-6']],
-                [$dominoes['0-6'], $dominoes['6-6']]
+                [$dominoes['0-6'], $dominoes['6-6']],
+                '🀷🁡'
             ],
             [
                 [
@@ -88,7 +91,8 @@ class BoardTest extends TestCase
                     new Domino(3, 0),
                     new Domino(0, 2),
                     new Domino(2, 3)
-                ]
+                ],
+                '🀲🀽🁙🁔🀵🁎🀹🀾🁡🁟🁐🁆🀳🁂'
             ]
         ];
     }
@@ -107,5 +111,24 @@ class BoardTest extends TestCase
         }
 
         return $pieces;
+    }
+
+    /**
+     * @param array $dominoesPieces
+     * @param array $expectedOrder
+     *
+     * @dataProvider dataProviderPiecesToAddInBoard()
+     */
+    public function testBoardToSymbol(array $dominoesPieces, array $expectedOrder, $boardSymbol)
+    {
+        $board = new Board();
+        foreach ($dominoesPieces as $domino) {
+            $board->addDominoToTheBoard($domino);
+        }
+
+        $this->assertEquals(
+            $boardSymbol,
+            $board->toSymbol()
+        );
     }
 }

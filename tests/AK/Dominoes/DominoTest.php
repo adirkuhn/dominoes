@@ -35,10 +35,9 @@ class DominoTest extends TestCase
     public function dataProviderDominoes(): array
     {
         return [
-            [1, 2],
-            [6, 0],
-            [1, 1],
-            [5, 3]
+            [1, 2, '🁀', '🀺'],
+            [1, 1, '🀹', '🀹'],
+            [5, 3, '🁋', '🁗']
         ];
     }
 
@@ -67,5 +66,39 @@ class DominoTest extends TestCase
             [1, -5],
             [6, 7]
         ];
+    }
+
+    /**
+     * @param int $left
+     * @param int $right
+     * @param string $symbol
+     * @param string $inverseSymbol
+     * @throws \AK\Dominoes\Exceptions\DominoInvalidRangeException
+     * @dataProvider dataProviderDominoes
+     */
+    public function testDominoToString(int $left, int $right, string $symbol, string $inverseSymbol)
+    {
+        $domino = new Domino($left, $right);
+
+        $str = '<%s-%s>';
+        $normalPiece = sprintf($str, $left, $right);
+        $inversePiece = sprintf($str, $right, $left);
+
+        //test original order
+        $this->assertEquals($normalPiece, $domino->toString());
+
+        $domino->inversePiece();
+
+        //test inverse order
+        $this->assertEquals($inversePiece, $domino->toString());
+
+        //test symbols
+        $domino->setUseSymbols(true);
+        $this->assertEquals($symbol, $domino->toString());
+        $this->assertEquals($symbol, $domino->toSymbol());
+
+        $domino->inversePiece();
+        $this->assertEquals($inverseSymbol, $domino->toString());
+        $this->assertEquals($inverseSymbol, $domino->toSymbol());
     }
 }
